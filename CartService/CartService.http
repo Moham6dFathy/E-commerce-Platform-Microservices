@@ -1,0 +1,156 @@
+@CartService_HostAddress = http://localhost:8084
+@UserId = 123
+@AuthToken = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVGVzdCBVc2VyIiwiZXhwIjoxNzU3ODYwMDQxLCJzdWIiOiIxMjMiLCJhdWQiOiJ5b3VyLWF1ZGllbmNlIiwiaXNzIjoieW91ci1pc3N1ZXIiLCJpYXQiOjE3NTc3NzM2NDF9.6E9926E_J5jA6hlU
+
+### Health Check - Get Cart (should return empty cart for new user)
+GET {{CartService_HostAddress}}/api/v1/cart
+Authorization: {{AuthToken}}
+Accept: application/json
+
+###
+
+### Add Item to Cart
+POST {{CartService_HostAddress}}/api/v1/cart/items
+Authorization: {{AuthToken}}
+Content-Type: application/json
+
+{
+  "productId": 1,
+  "quantity": 1,
+  "expiryTime": "2025-09-14T14:18:50Z"
+}
+
+###
+
+### Add Another Item to Cart
+POST {{CartService_HostAddress}}/api/v1/cart/items
+Authorization: {{AuthToken}}
+Content-Type: application/json
+
+{
+  "productId": 2,
+  "quantity": 2,
+  "expiryTime": "2025-09-14T14:18:50Z"
+}
+
+###
+
+### Add Same Product Again (should increase quantity)
+POST {{CartService_HostAddress}}/api/v1/cart/items
+Authorization: {{AuthToken}}
+Content-Type: application/json
+
+{
+  "productId": 1,
+  "quantity": 1,
+  "expiryTime": "2025-09-14T14:18:50Z"
+}
+
+###
+
+### Get Cart (should show items with updated quantities)
+GET {{CartService_HostAddress}}/api/v1/cart
+Authorization: {{AuthToken}}
+Accept: application/json
+
+###
+
+### Update Cart Item Quantity
+PUT {{CartService_HostAddress}}/api/v1/cart/items/2
+Authorization: {{AuthToken}}
+Content-Type: application/json
+
+{
+  "quantity": 3
+}
+
+###
+
+### Get Cart After Update
+GET {{CartService_HostAddress}}/api/v1/cart
+Authorization: {{AuthToken}}
+Accept: application/json
+
+###
+
+### Remove Item from Cart
+DELETE {{CartService_HostAddress}}/api/v1/cart/items/2
+Authorization: {{AuthToken}}
+
+###
+
+### Get Cart After Removal
+GET {{CartService_HostAddress}}/api/v1/cart
+Authorization: {{AuthToken}}
+Accept: application/json
+
+###
+
+### Mark Cart as Ordered
+POST {{CartService_HostAddress}}/api/v1/cart/order/order-123
+Authorization: {{AuthToken}}
+Content-Type: application/json
+
+###
+
+### Mark Cart as Payment Confirmed
+POST {{CartService_HostAddress}}/api/v1/cart/payment-confirmed
+Authorization: {{AuthToken}}
+Content-Type: application/json
+
+###
+
+### Clear Cart
+DELETE {{CartService_HostAddress}}/api/v1/cart
+Authorization: {{AuthToken}}
+
+###
+
+### Test Invalid Request - Missing Required Fields
+POST {{CartService_HostAddress}}/api/v1/cart/items
+Authorization: {{AuthToken}}
+Content-Type: application/json
+
+{
+  "productId": 3,
+  "quantity": 1
+}
+
+###
+
+### Test Invalid Request - Negative Price
+POST {{CartService_HostAddress}}/api/v1/cart/items
+Authorization: {{AuthToken}}
+Content-Type: application/json
+
+{
+  "productId": 4,
+  "quantity": 0
+}
+
+###
+
+### Test Invalid Request - Zero Quantity
+POST {{CartService_HostAddress}}/api/v1/cart/items
+Authorization: {{AuthToken}}
+Content-Type: application/json
+
+{
+  "productId": 5,
+  "quantity": -1
+}
+
+###
+
+### Test Unauthorized Request (No Token)
+GET {{CartService_HostAddress}}/api/v1/cart
+Accept: application/json
+
+###
+
+### Test Invalid Token
+GET {{CartService_HostAddress}}/api/v1/cart
+Authorization: Bearer invalid-token
+Accept: application/json
+
+###

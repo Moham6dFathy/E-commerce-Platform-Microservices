@@ -1,0 +1,17 @@
+# Java/Spring Boot
+**/target/
+*.iml
+*.log
+
+# .NET
+**/bin/
+**/obj/
+*.user
+*.vs
+
+# Docker
+**/docker-compose.override.yml
+
+# General
+.vscode/
+.idea/

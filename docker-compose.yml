@@ -1,0 +1,103 @@
+version: "3.8"
+
+services:
+  # ===== Auth Service DB =====
+  auth-db:
+    image: postgres:latest
+    container_name: postgres-auth-container
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: users_db
+    ports:
+      - "5442:5432"
+    volumes:
+      - auth_db_data:/var/lib/postgresql/data
+    networks:
+      - ecommerce-network
+
+  # ===== Product Service DB =====
+  product-db:
+    image: mysql:latest
+    container_name: mysql-product-container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - product_db_data:/var/lib/mysql
+    networks:
+      - ecommerce-network
+
+  # ===== Order Service DB =====
+  order-db:
+    image: postgres:latest
+    container_name: postgres-order-container
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: orders_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - order_db_data:/var/lib/postgresql/data
+    networks:
+      - ecommerce-network
+
+  # ===== Order Service RabbitMQ =====
+  rabbitmq:
+    image: rabbitmq:latest
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: myuser
+      RABBITMQ_DEFAULT_PASS: mypassword
+    networks:
+      - ecommerce-network
+
+  # ===== Cart Service Redis =====
+  redis:
+    image: redis:latest
+    container_name: redis-container
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - ecommerce-network
+
+
+  # ===== Payment Service DB =====
+  payment-db:
+    image: mysql:latest
+    container_name: mysql-payment-container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: PaymentDb
+    ports:
+      - "3316:3306"
+    volumes:
+      - payment_db_data:/var/lib/mysql
+    networks:
+      - ecommerce-network
+
+# ===== Volumes =====
+volumes:
+  auth_db_data:
+  product_db_data:
+  order_db_data:
+  redis_data:
+  payment_db_data:
+
+# ===== Network =====
+networks:
+  ecommerce-network:
+    driver: bridge
