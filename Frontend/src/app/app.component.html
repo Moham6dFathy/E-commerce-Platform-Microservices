@@ -1,0 +1,20 @@
+<header class="header">
+  <div class="header-content">
+    <a class="logo" routerLink="/">
+      <i class="pi pi-shopping-bag"></i>
+      <span>E-Shop</span>
+    </a>
+    <nav class="nav-menu">
+      <a class="nav-item" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+      <a class="nav-item" routerLink="/products" routerLinkActive="active">Products</a>
+      <a class="nav-item" routerLink="/order" routerLinkActive="active" *ngIf="auth.isLoggedIn()">Orders</a>
+      <a class="nav-item" routerLink="/login" *ngIf="!auth.isLoggedIn()" routerLinkActive="active">Login</a>
+      <a class="nav-item" routerLink="/cart" routerLinkActive="active" *ngIf="auth.isLoggedIn()">Cart</a>
+      <button pButton class="nav-item" label="Logout" *ngIf="auth.isLoggedIn()" (click)="logout()"></button>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <router-outlet></router-outlet>
+</main>

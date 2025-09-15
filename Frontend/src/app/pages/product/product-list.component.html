@@ -1,0 +1,28 @@
+<p-toast></p-toast>
+
+<div class="product-grid">
+  <div class="product-card" *ngFor="let p of products">
+    <p-card [header]="p.name" [subheader]="'$' + p.price" [styleClass]="'custom-card'">
+      <ng-template pTemplate="content">
+        <p>{{ p.description }}</p>
+        <p><strong>Stock:</strong> {{ p.stock }}</p>
+        <div class="button-group">
+          <button pButton label="Add to Cart" (click)="addToCart(p)" class="p-button-success"></button>
+          <button pButton label="Details" (click)="showDetails(p)" class="p-button-info"></button>
+        </div>
+
+      </ng-template>
+    </p-card>
+  </div>
+</div>
+
+<p-paginator [rows]="pageSize" [totalRecords]="totalRecords" [rowsPerPageOptions]="[6,12,18]" (onPageChange)="onPageChange($event)">
+</p-paginator>
+
+<p-dialog header="{{selectedProduct?.name}}" [(visible)]="displayDetails" [modal]="true" [closable]="true">
+  <ng-container *ngIf="selectedProduct">
+    <p>{{ selectedProduct.description }}</p>
+    <p><strong>Price:</strong> ${{ selectedProduct.price }}</p>
+    <p><strong>Stock:</strong> {{ selectedProduct.stock }}</p>
+  </ng-container>
+</p-dialog>

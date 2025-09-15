@@ -1,0 +1,14 @@
+<div class="login-card">
+  <p-card>
+    <h2>Login</h2>
+    <div class="p-fluid">
+      <label>Username</label>
+      <input pInputText [(ngModel)]="username" />
+      <label>Password</label>
+      <input pInputText type="password" [(ngModel)]="password" />
+      <button pButton label="Login" (click)="submit()" [disabled]="loading"></button>
+      <a routerLink="/register">Register</a>
+    </div>
+  </p-card>
+  <p-toast></p-toast>
+</div>

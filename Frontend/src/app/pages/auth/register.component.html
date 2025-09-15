@@ -1,0 +1,36 @@
+<div class="register-card">
+  <p-card>
+    <h2>Register</h2>
+
+    <div class="p-fluid">
+      <div class="p-field">
+        <label for="username">Username</label>
+        <input id="username" pInputText [(ngModel)]="username" />
+      </div>
+
+      <div class="p-field">
+        <label for="email">Email</label>
+        <input id="email" type="email" pInputText [(ngModel)]="email" />
+      </div>
+
+      <div class="p-field">
+        <label for="password">Password</label>
+        <input id="password" type="password" pInputText [(ngModel)]="password" />
+      </div>
+
+      <button
+        pButton
+        label="Register"
+        (click)="submit()"
+        [disabled]="loading"
+        class="p-mt-2"
+      ></button>
+
+      <p class="p-mt-3">
+        Already have an account? <a routerLink="/login">Login</a>
+      </p>
+    </div>
+  </p-card>
+
+  <p-toast></p-toast>
+</div>
