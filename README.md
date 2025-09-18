@@ -5,9 +5,7 @@
 This system is an **e-commerce platform** where:
 
 - Users register/login with JWT.
-- Products can be browsed, added to a **cart** or **wishlist**.
-- Orders can be placed only if JWT is valid.
-- Payments require JWT validation as well.
+- Products can be browsed, added to a **cart**.
 - **Cart items expire after 24 hours**, extended to **1 week** when ordered, and set **indefinitely** when payment is completed.
 - **RabbitMQ** ensures async communication between services (e.g., sending confirmation emails, updating stock, payment notifications).
 - **Swagger/OpenAPI** documents all APIs.
